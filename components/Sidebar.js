@@ -10,7 +10,7 @@ import { FaPlus } from 'react-icons/fa';
 
 const StyledSidebar = styled.div`    
     position: absolute;
-    height: calc(100% - 80px);
+    height: calc(100% - 90px);
     width: 70px;
     left: 0;
     top: 80px;

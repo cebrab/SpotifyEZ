@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { FaSearch } from 'react-icons/fa';
+import { slide as Menu } from 'react-burger-menu';
 
 import colors from '../styles/colors';
 import breakpoints from '../styles/breakpoints';
@@ -77,6 +78,7 @@ function SearchBar() {
     )
 }
 function Navbar() {
+    const [showHamnav, setShowHamnav] = useState(false);
     
     //Styles for the entire navbar
     const navbarStyles = css`
@@ -127,17 +129,103 @@ function Navbar() {
         padding: 30px 10px 0 0;
         font-size: 16px;
         width: 10%;
-        height: calc(100% - 30px) //subtract the padding
+        height: calc(100% - 30px); //subtract the padding
     `;
 
+    const burgerMenuItemStyles = css`
+        :hover {
+            background-color: ${colors.hoverBlack};
+        }
+    `;
+    var burgerMenuStyles = {
+        bmBurgerButton: {
+            position: 'fixed',
+            width: '36px',
+            height: '30px',
+            right: '36px',
+            top: '25px'
+        },
+        bmBurgerBars: {
+            background: `${colors.black}`,
+        },
+        bmCrossButton: {
+            height: '40px',
+            width: '40px',
+        },
+        bmCross: {
+            background: '#bdc3c7',
+            height: '30px',
+            right: '10px'
+        },
+        bmMenuWrap: {
+            position: 'fixed',
+            top: 0,
+            bottom: 0
+        },
+        bmMenu: {
+            background: `${colors.black}`,
+            padding: '80px 0',
+            fontSize: '1.15em'
+        },
+        bmMorphShape: {
+            fill: '#373a47'
+        },
+        bmItemList: {
+            color: '#b8b7ad',
+            overflow: 'none',
+            height: '20%'
+        },
+        bmItem: {
+            display: 'inline-block',
+            width: '100%',
+            textDecoration: 'none',
+            textAlign: 'center',
+            color: 'white',
+            padding: '10px 0px',
+            fontSize: '25px',
+        },
+        bmOverlay: {
+            background: 'rgba(0, 0, 0, 0.3)',
+            top: 0,
+            left: 0
+        }
+    }
+
+    const updateMedia = () => {
+        setShowHamnav(window.innerWidth <= breakpoints.lg);
+    };
+
+    useEffect(() => {
+        window.addEventListener("resize", updateMedia);
+        return () => window.removeEventListener("resize", updateMedia);
+    });
+
+    useEffect(() => {
+        setShowHamnav(window.innerWidth <= breakpoints.lg);
+    }, []);
+
     return(
-        <div css={navbarStyles}>
-            <a css={siteTitleStyles} href="#">SpotifyEZ</a>
-            <a css={navItemStyles} href="#">Home</a>
-            <a css={navItemStyles} href="#">About</a>
-            <SearchBar />
-            <a css={logOutButtonStyles} href="#">Log Out</a>
-        </div>
+        <>
+            {showHamnav ? 
+                <>
+                    <div css={navbarStyles}>
+                        <SearchBar />
+                    </div>
+                    <Menu right styles={burgerMenuStyles}>
+                        <a href="/" css={burgerMenuItemStyles}>Home</a>
+                        <a href="about" css={burgerMenuItemStyles}>About</a>
+                        <a href="#" css={burgerMenuItemStyles}>Log Out</a>
+                    </Menu>
+                </> :
+                <div css={navbarStyles}>
+                    <a css={siteTitleStyles} href="#">SpotifyEZ</a>
+                    <a css={navItemStyles} href="#">Home</a>
+                    <a css={navItemStyles} href="#">About</a>
+                    <SearchBar />
+                    <a css={logOutButtonStyles} href="#">Log Out</a>
+                </div>
+            }
+        </>
     );
 }
 
