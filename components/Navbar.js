@@ -92,7 +92,7 @@ function Navbar() {
     const navItemStyles = css`
         padding-top: 25px;
         height: calc(100% - 25px); //subtract the padding;
-        width: 5%;
+        width: 8%;
 
         font-weight: bold;
         font-size: 20px;
@@ -124,7 +124,10 @@ function Navbar() {
     const logOutButtonStyles = css`
         ${navItemStyles};
         float: right;
-        padding-right: 10px;
+        padding: 30px 10px 0 0;
+        font-size: 16px;
+        width: 10%;
+        height: calc(100% - 30px) //subtract the padding
     `;
 
     return(
