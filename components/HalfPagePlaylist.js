@@ -5,12 +5,10 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import HalfPagePlaylistItem from './HalfPagePlaylistItem'
 
-const HalfPagePlaylistUIStyling = css`
-  background-color: black;
-`;
-
 const HalfPagePlaylistContainerStyling = css`
   list-style: none;
+  width: 45%;
+  height: 100%;
 `;
 
 

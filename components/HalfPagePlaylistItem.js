@@ -10,23 +10,37 @@ const HalfPagePlaylistItemStyling= css`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  margin: 5px;
+
   img {
-    margin-right: 20%;
     padding: 10px;
+  };
+  h2 {
+    margin-right: 15%;
   };
   border-style: solid;
   border-radius: 4px;
   border-width: 2px;
   border-color: black;
-  width: 40%;
+  color: floralwhite;
+  width: 100%;
+  height: 100px;
+  background-color: #121212;
+  div {
+    font-size: 20px;
+    margin: 3%;
+  };
+  transition: 100ms all ease;
+  &:hover {
+    background-color: #404040;
+  }
 `;
 function HalfPagePlaylistItem(){
   return (
     <>
       <div css={HalfPagePlaylistItemStyling}>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" width="128px" height="128px"/>
-        <h2> Song title </h2>
+        <div> 1 </div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" width="80px" height="85%"/>
+        <div>Never gonna give you up</div>
         <HalfPagePlaylistItemAddButton/>
         <HalfPagePlaylistItemPlayButton/>
       </div>

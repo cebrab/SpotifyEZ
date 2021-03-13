@@ -9,14 +9,17 @@ function HalfPagePlaylistItemAddButton(){
 
   const addButtonStyling = css `
     border: 0;
+    outline: none;
     background: transparent;
     box-sizing: border-box;
     font-size: 100px;
-    margin: 5%;
+    margin: 2%;
     cursor: pointer;
-    border-color: transparent transparent transparent #202020;
+    color: floralwhite;
     &:hover {
-      color: #404040;
+      transform:scale(1.1,1.1);
+      -webkit-transform:scale(1.1,1.1);
+      -moz-transform:scale(1.1,1.1);
     }
   `;
   function addButtonClicked(e){

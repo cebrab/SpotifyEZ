@@ -14,7 +14,7 @@ function HalfPagePlaylistItemPlayButton(){
     width: 0;
     height: 74px;
 
-    border-color: transparent transparent transparent #202020;
+    border-color: transparent transparent transparent floralwhite;
     transition: 100ms all ease;
     cursor: pointer;
 
@@ -26,9 +26,13 @@ function HalfPagePlaylistItemPlayButton(){
       border-style: double;
       border-width: 0px 0 0px 60px;
     }
-
+    transform:scale(0.8,0.8);
+    -webkit-transform:scale(0.8,0.8);
+    -moz-transform:scale(0.8,0.8);
     &:hover {
-      border-color: transparent transparent transparent #404040;
+      transform:scale(0.9,0.9);
+      -webkit-transform:scale(0.9,0.9);
+      -moz-transform:scale(0.9,0.9);
     }
   `;
   function playButtonClicked(e){

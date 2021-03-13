@@ -5,23 +5,26 @@ import Sidebar from '../components/Sidebar'
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
-const TestHalfPagePlaylistMainUIStyling = css`
-  display: flex !important;
-  flex-direction: column !important;
-`;
-
-const SecondRowStyling = css`
-  display:flex !important;
-  flex-direction: row !important;
-`;
-
-const OverwriteSidebarStyling = css`
-  display: flex !important;
-`;
 export default function TestHalfPagePlaylist() {
   return(
     <>
+
+      <style global jsx>{`
+      html,
+      body,
+      body > div:first-child,
+      div#__next,
+      div#__next > div {
+        height: 100%;
+        background: #034143;
+        background: -webkit-linear-gradient(top left, #034143, #B64A2F);
+        background: -moz-linear-gradient(top left, #034143, #B64A2F);
+        background: linear-gradient(to bottom right, #034143, #B64A2F);
+      };
+      }
+    `}</style>
       <HalfPagePlaylist/>
+
     </>
   );
 }
