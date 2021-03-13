@@ -8,15 +8,20 @@ import colors from '../styles/colors';
 import Link from 'next/link';
 import { FaPlus } from 'react-icons/fa';
 
-const StyledSidebar = styled.div`    
+const StyledSidebar = styled.div`
     position: absolute;
     height: calc(100% - 90px);
     width: 70px;
-    left: 0;
-    top: 80px;
+    position: fixed;
+    z-index: 1;
+    top: 81px;
+    left: 0px;
     padding-top: 10px;
-
-    background-color: ${colors.darkGreen};
+    border-style: solid;
+    border-width: 1px;
+    border-color: grey;
+    border-radius: 4px;
+    background-color: #121212;
     color: white;
 
 `;
@@ -40,7 +45,7 @@ function Sidebar() {
             id: 1,
             name: "Beethoven",
             imageUrl: "../images/sample-playlist.jpg",
-        }, 
+        },
         {
             id: 2,
             name: "Beethoven",
@@ -56,7 +61,7 @@ function Sidebar() {
         margin-bottom: 10px;
 
         cursor: pointer;
-        transition: all .2s ease-in-out; 
+        transition: all .2s ease-in-out;
 
         :hover{
             transform: scale(1.1);
@@ -80,12 +85,12 @@ function Sidebar() {
             <PlaylistsList>
                 {playlistData.map(playlist => (
                     <Link href={`playlists/${playlist.id}`} key={playlist.id}>
-                        <img 
+                        <img
                             src={playlist.imageUrl}
                             css={sidebarIconStyles}
                             alt={playlist.name}
                         />
-                    </Link> 
+                    </Link>
                 ))}
                 <Link href="playlists/new">
                     <span css={newPlaylistButtonStyles}>
@@ -93,7 +98,7 @@ function Sidebar() {
                     </span>
                 </Link>
             </PlaylistsList>
-            
+
         </StyledSidebar>
     );
 }

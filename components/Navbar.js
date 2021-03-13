@@ -65,7 +65,7 @@ function SearchBar() {
                 setSearchString('');
                 e.preventDefault();
             }}>
-                <input 
+                <input
                     value={searchString}
                     placeholder='Search for a song or artist...'
                     onChange={(e) => setSearchString(e.target.value)}
@@ -79,7 +79,7 @@ function SearchBar() {
 }
 function Navbar() {
     const [showHamnav, setShowHamnav] = useState(false);
-    
+
     //Styles for the entire navbar
     const navbarStyles = css`
         width: 100%;
@@ -87,7 +87,11 @@ function Navbar() {
         top: 0;
         left: 0;
         position: fixed;
-        background-color: ${colors.gray};
+        background-color: #121212;
+        border-style: solid;
+        border-width: 1px;
+        border-color: grey;
+        border-radius: 4px;
     `;
 
     //Parent styles for all links on the Navbar
@@ -95,18 +99,18 @@ function Navbar() {
         padding-top: 25px;
         height: calc(100% - 25px); //subtract the padding;
         width: 8%;
-
+        border-radius: 2px;
         font-weight: bold;
         font-size: 20px;
         text-align: center;
-        color: black;
+        color: floralwhite;
         text-decoration: none;
         float: left;
 
         :hover {
             cursor: pointer;
             color:  ${colors.darkGreen};
-            background-color: ${colors.hoverGray};    
+            background-color: ${colors.hoverGray};
         }
     `;
 
@@ -206,7 +210,7 @@ function Navbar() {
 
     return(
         <>
-            {showHamnav ? 
+            {showHamnav ?
                 <>
                     <div css={navbarStyles}>
                         <SearchBar />

@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import HalfPagePlaylist from '../components/HalfPagePlaylist'
+import Layout from '../components/Layout';
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import styled from '@emotion/styled';
@@ -8,7 +9,7 @@ import { css } from '@emotion/react';
 export default function TestHalfPagePlaylist() {
   return(
     <>
-
+    <Layout>
       <style global jsx>{`
       html,
       body,
@@ -24,7 +25,7 @@ export default function TestHalfPagePlaylist() {
       }
     `}</style>
       <HalfPagePlaylist/>
-
+    </Layout>
     </>
   );
 }
