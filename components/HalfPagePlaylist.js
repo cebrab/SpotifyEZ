@@ -12,16 +12,12 @@ const HalfPagePlaylistContainerStyling = css`
 `;
 
 
-function HalfPagePlaylist(){
+function HalfPagePlaylist(props){
   return (
     <>
     <div>
       <ul css={HalfPagePlaylistContainerStyling}>
-        <li>
-          <HalfPagePlaylistItem/>
-          <HalfPagePlaylistItem/>
-          <HalfPagePlaylistItem/>
-        </li>
+        {props.playlist.map((num, index) => <HalfPagePlaylistItem key={props.playlist[index].id} imgUrl={props.playlist[index].album.images[index].url}  index={index+1} songName={props.playlist[index].name}/>)}
       </ul>
     </div>
     </>

@@ -14,6 +14,7 @@ function HalfPagePlaylistItemAddButton(){
     box-sizing: border-box;
     font-size: 100px;
     margin: 2%;
+    margin-left: 30px;
     cursor: pointer;
     color: floralwhite;
     &:hover {

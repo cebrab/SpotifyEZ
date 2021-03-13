@@ -28,23 +28,28 @@ const HalfPagePlaylistItemStyling= css`
   div {
     font-size: 20px;
     margin: 3%;
+
   };
+  .songName{
+    width: 40%;
+  }
   transition: 100ms all ease;
   &:hover {
     background-color: #404040;
   }
 `;
-function HalfPagePlaylistItem(){
+function HalfPagePlaylistItem(props){
   return (
     <>
+    <li>
       <div css={HalfPagePlaylistItemStyling}>
-        <div> 1 </div>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" width="80px" height="85%"/>
-        <div>Never gonna give you up</div>
+        <div>{props.index}</div>
+        <img src={props.imgUrl} width="80px" height="85%"/>
+        <div className="songName">{props.songName}</div>
         <HalfPagePlaylistItemAddButton/>
         <HalfPagePlaylistItemPlayButton/>
       </div>
-
+    </li>
     </>
   );
 }
