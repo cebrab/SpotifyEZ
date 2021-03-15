@@ -17,7 +17,7 @@ function HalfPagePlaylist(props){
     <>
     <div>
       <ul css={HalfPagePlaylistContainerStyling}>
-        {props.playlist.map((num, index) => <HalfPagePlaylistItem key={props.playlist[index].id} imgUrl={props.playlist[index].album.images[index].url}  index={index+1} songName={props.playlist[index].name}/>)}
+        {props.playlist.map((num, index) => <HalfPagePlaylistItem key={props.playlist[index].id} imgUrl={props.playlist[index].album.images[index].url}  index={index+1} songName={props.playlist[index].name} uri={props.playlist[index].uri}/>)}
       </ul>
     </div>
     </>

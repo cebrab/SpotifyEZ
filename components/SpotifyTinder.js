@@ -13,6 +13,7 @@ function SpotifyTinder(props){
     width: 50px;
     height: 50px;
     margin: 10px;
+    cursor: pointer;
     &:hover{
       transform:scale(1.1,1.1);
       -webkit-transform:scale(1.1,1.1);
@@ -46,7 +47,7 @@ function SpotifyTinder(props){
     <div css={SpotifyTinderContainerStyling}>
       {console.log("Playlist object: " + props.playlist[counter].uri)}
 
-      <SpotifyPlayer uri={props.playlist[counter].uri}/>
+      <SpotifyPlayer uri={props.playlist[counter].uri} playerWidth="380px" playerHeight="380px"/>
 
     <div>
       <img src="../images/x-icon-transparent.png" alt="swipe left" onClick={swipeLeftClicked}/>

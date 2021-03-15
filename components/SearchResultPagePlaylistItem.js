@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import SpotifyPlayer from './SpotifyPlayer';
-import HalfPagePlaylistItemPlayButton from './HalfPagePlaylistItemPlayButton';
-import HalfPagePlaylistItemRemoveButton from './HalfPagePlaylistItemRemoveButton';
-const HalfPagePlaylistItemStyling= css`
+
+import SearchResultPagePlaylistItemAddButton from './SearchResultPagePlaylistItemRemoveButton';
+const SearchResultPagePlaylistItemStyling= css`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -39,18 +39,18 @@ const HalfPagePlaylistItemStyling= css`
     background-color: #404040;
   }
 `;
-function HalfPagePlaylistItem(props){
+function SearchResultPagePlaylistItem(props){
   return (
     <>
     <li>
-      <div css={HalfPagePlaylistItemStyling}>
+      <div css={SearchResultPagePlaylistItemStyling}>
         <div>{props.index}</div>
         <SpotifyPlayer uri={props.uri} playerHeight="80px" playerWidth="300px"/>
-        <HalfPagePlaylistItemRemoveButton/>
+        <SearchResultPagePlaylistItemAddButton/>
 
       </div>
     </li>
     </>
   );
 }
-export default HalfPagePlaylistItem;
+export default SearchResultPagePlaylistItem;

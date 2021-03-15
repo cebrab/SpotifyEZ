@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
 
-function HalfPagePlaylistItemAddButton(){
+function SearchResultPagePlaylistAddButton(){
 
   const addButtonStyling = css `
     border: 0;
@@ -34,4 +34,4 @@ function HalfPagePlaylistItemAddButton(){
     </>
   );
 }
-export default HalfPagePlaylistItemAddButton;
+export default SearchResultPagePlaylistAddButton;
