@@ -11,7 +11,6 @@ const HalfPagePlaylistContainerStyling = css`
   height: 100%;
 `;
 
-
 function HalfPagePlaylist(props){
   return (
     <>

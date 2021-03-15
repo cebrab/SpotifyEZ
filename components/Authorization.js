@@ -1,20 +1,14 @@
-import React, { useEffect } from 'react'
-import { getAuthorizeHref, getHashParams, removeHashParamsFromUrl } from '../auth/Auth'
-
-import { 
-  setAccessToken, 
-  setExpiresIn,
-  setIsAuthed } from '../redux/actions/authActions'
-  
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
-import { getAccessToken } from '../redux/selectors'
+import { setAcessToken, setExpiresIn, setIsAuthed } from '../store/actions/authAction'
+import { getAuthorizeHref, getHashParams, removeHashParamsFromUrl } from '../auth/Auth'
 
 const Authorization = () => {
 
-  const auth = useSelector(getAccessToken)
   const dispatch = useDispatch()
-  console.log('Access Token === ', auth)
+  const { accessToken, isAuthed } = useSelector(state => state.auth)
+  //console.log('Access Token === ', accessToken)
+  console.log('isAuthed === ', isAuthed)
 
   useEffect(() => {
     const params = getHashParams()
@@ -22,20 +16,26 @@ const Authorization = () => {
     const expiresIn = params.expires_in
 
     if (accessToken) {
-      dispatch(setAccessToken(accessToken))
+      dispatch(setAcessToken(accessToken))
       dispatch(setExpiresIn(expiresIn))
       dispatch(setIsAuthed(true))
-      removeHashParamsFromUrl()
     }
+    removeHashParamsFromUrl()
   }, [])
 
   return (
-
     <div>
-      <button
-        onClick={() => window.location = (getAuthorizeHref())}>
-        hit me
-      </button>
+      {/* { isAuthed === false && */}
+        <button
+          onClick={() => {
+            window.location = getAuthorizeHref()
+          }}>
+          Authentication
+        </button>
+      {/* } */}
+      { isAuthed === true &&
+        <h6>Acess Token :{accessToken}</h6>
+      }
 
     </div>
   )
