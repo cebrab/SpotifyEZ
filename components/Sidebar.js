@@ -92,7 +92,7 @@ function Sidebar() {
                         />
                     </Link>
                 ))}
-                <Link href="playlists/new">
+                <Link href="/SpotifyTinderPage">
                     <span css={newPlaylistButtonStyles}>
                         <FaPlus  />
                     </span>

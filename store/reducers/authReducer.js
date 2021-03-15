@@ -1,36 +1,40 @@
-import {
-  SET_ACCESS_TOKEN,
-  SET_EXPIRES_IN,
-  SET_IS_AUTHED
-} from '../actions/authActions'
+import * as types from '../types'
 
-
-const authReducer = (state = {
+const initialState = {
   accessToken: '',
   expiresIn: 0,
   expireDate: '',
   isAuthed: 'false'
-}, action) => {
+}
 
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_ACCESS_TOKEN:
+
+    case types.SET_ACCESS_TOKEN:
       return {
         ...state,
         accessToken: action.accessToken
       }
-    case SET_EXPIRES_IN:
+
+    case types.SET_EXPIRES_IN:
       const expireDate = new Date()
-      expireDate.setSeconds(expireDate.getSeconds() + action.expiresIn)
+      if (action.expiresIn > 0) {
+        expireDate.setSeconds(expireDate.getSeconds() + action.expiresIn)
+      } else {
+        expireDate.setSeconds(expireDate.getSeconds())
+      }
       return {
         ...state,
         expiresIn: action.expiresIn,
         expireDate: expireDate.toISOString()
       }
-    case SET_IS_AUTHED:
+
+    case types.SET_IS_AUTHED:
       return {
         ...state,
         isAuthed: action.isAuthed
       }
+
     default:
       return state
   }
