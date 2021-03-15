@@ -7,7 +7,7 @@ import HalfPagePlaylistItem from './HalfPagePlaylistItem'
 
 const HalfPagePlaylistContainerStyling = css`
   list-style: none;
-  width: 45%;
+  width: 100%;
   height: 100%;
 `;
 

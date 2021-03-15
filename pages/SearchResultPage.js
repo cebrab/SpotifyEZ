@@ -9,6 +9,12 @@ import { css } from '@emotion/react';
 import React, { useState } from 'react';
 //note track is an array with one object, and that object contains
 export default function TestHalfPagePlaylist() {
+
+  const SpotifyTinderPageContainerStyling = css`
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  `;
   const [dummyData, setDummyData] = useState({
   "tracks": [
     {
@@ -276,8 +282,12 @@ export default function TestHalfPagePlaylist() {
       };
       }
     `}</style>
+
+    <div css={SpotifyTinderPageContainerStyling}>
       <HalfPagePlaylist playlist={dummyData.tracks}/>
-      <SpotifyTinder/>
+    </div>
+
+
     </Layout>
     </>
   );
