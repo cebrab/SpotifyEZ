@@ -15,10 +15,11 @@ const Home = () => {
       <Authorization />
       { isAuthed === true &&
         <>
-          <Layout />
-          <UserProfile />
-          <Recommendations />
-          <UserCurrentPlaylist />
+          <Layout>
+            <UserProfile />
+            <Recommendations />
+            <UserCurrentPlaylist />
+          </Layout>
         </>
       }
     </div>
