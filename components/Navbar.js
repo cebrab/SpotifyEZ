@@ -53,7 +53,11 @@ function SearchBar() {
 
         button:hover {
             cursor: pointer;
-            color:  ${colors.darkGreen};
+            color: ${colors.darkGreen};
+        }
+
+        @media (max-width: ${breakpoints.lg}px) and (min-width: ${breakpoints.sm}px) {
+            width: 78%;
         }
     `;
 
@@ -110,7 +114,7 @@ function Navbar() {
         :hover {
             cursor: pointer;
             color:  ${colors.darkGreen};
-            background-color: ${colors.hoverGray};
+            background-color: ${colors.hoverBlack};
         }
     `;
 
@@ -150,7 +154,7 @@ function Navbar() {
             top: '25px'
         },
         bmBurgerBars: {
-            background: `${colors.black}`,
+            background: 'white',
         },
         bmCrossButton: {
             height: '40px',
