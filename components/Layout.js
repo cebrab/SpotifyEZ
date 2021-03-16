@@ -10,7 +10,7 @@ export default function Layout({ children }) {
       <Navbar />
       <Sidebar />
       <div css={css({
-        marginLeft:'70px',
+        marginLeft:'80px',
         marginTop: '90px'
       })}>
         {children}

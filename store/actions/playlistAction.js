@@ -33,3 +33,12 @@ export const getPlaylistById = (accessToken, playlistId) => async dispatch => {
     playlistById: res.data
   })
 }
+
+export const getPlaylistsList = (accessToken) => async dispatch => {
+  const url = 'https://api.spotify.com/v1/me/playlists'
+  const res = await axios(getOptions(accessToken, url))
+  dispatch({
+    type: types.GET_PLAYLISTS_LIST,
+    playlists: res.data.items
+  })
+}

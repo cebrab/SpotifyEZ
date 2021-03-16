@@ -1,28 +1,29 @@
 /** @jsxImportSource @emotion/react */
 
-import React, { useState } from 'react';
-
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import colors from '../styles/colors';
 import Link from 'next/link';
 import { FaPlus } from 'react-icons/fa';
+import usePlaylists from '../hooks/usePlaylists';
 
 const StyledSidebar = styled.div`
     position: absolute;
-    height: calc(100% - 90px);
-    width: 70px;
+    height: calc(100% - 100px); //factor in the top and bottom
+    width: 80px;
     position: fixed;
     z-index: 1;
     top: 81px;
     left: 0px;
-    padding-top: 10px;
+    padding: 10px 0;
     border-style: solid;
     border-width: 1px;
     border-color: grey;
     border-radius: 4px;
     background-color: #121212;
     color: white;
+
+    overflow-y:scroll;
 
 `;
 
@@ -34,24 +35,7 @@ const PlaylistsList = styled.div`
 `;
 
 function Sidebar() {
-    //TODO: Store playlists in the redux store, and get them here.
-    const [playlistData, setPlaylistData] = useState([
-        {
-            id: 0,
-            name: "Beethoven",
-            imageUrl: "../images/sample-playlist.jpg",
-        },
-        {
-            id: 1,
-            name: "Beethoven",
-            imageUrl: "../images/sample-playlist.jpg",
-        },
-        {
-            id: 2,
-            name: "Beethoven",
-            imageUrl: "../images/sample-playlist.jpg",
-        }
-    ]);
+    const { playlists } = usePlaylists()
 
     const sidebarIconStyles = css`
         object-fit: cover;
@@ -78,16 +62,18 @@ function Sidebar() {
         align-items: center;
         justify-content: center;
         font-size: 20px;
+        position: absolute;
     `;
 
     return (
         <StyledSidebar>
             <PlaylistsList>
-                {playlistData.map(playlist => (
+              { playlists && playlists.map(playlist => (
                     <Link href={`playlists/${playlist.id}`} key={playlist.id}>
                         <img
-                            src={playlist.imageUrl}
+                            src={playlist.images[0].url}
                             css={sidebarIconStyles}
+                            title={playlist.name}
                             alt={playlist.name}
                         />
                     </Link>

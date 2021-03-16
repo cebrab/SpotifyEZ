@@ -14,3 +14,4 @@ export const GET_SONGS = 'GET_SONGS'
 // Playlist
 export const GET_USER_PLAYLIST = 'GET_USER_PLAYLIST'
 export const GET_PLAYLIST_BY_ID = 'GET_PLAYLIST_BY_ID'
+export const GET_PLAYLISTS_LIST = 'GET_PLAYLISTS_LIST'
