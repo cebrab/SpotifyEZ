@@ -69,7 +69,7 @@ function Sidebar() {
         <StyledSidebar>
             <PlaylistsList>
               { playlists && playlists.map(playlist => (
-                    <Link href={`playlists/${playlist.id}`} key={playlist.id}>
+                    <Link href={`/playlists/${playlist.id}`} key={playlist.id}>
                         <img
                             src={playlist.images[0].url}
                             css={sidebarIconStyles}
