@@ -1,96 +1,76 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from 'react'
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-
 import colors from '../styles/colors'
-import breakpoints from '../styles/breakpoints'
+
 import SpotifyPlayer from './SpotifyPlayer'
 
-function PlaylistViewOptionsMenu({makingSubPlaylist, setMakingSubPlaylist}) {
-  const PlaylistViewOptionsMenuContainer = styled.div`
-    width: 100%;
-    height: 30px;
-    background-color: ${colors.darkGreen};
-    margin-bottom: 5px;
-  `;
+const playlistViewItemButtonStyles = css`
+  height: 30px;
+  width: 30px;
 
-  const PlaylistViewOptionsMenuItem = styled.span`
-    float: left;
-    width: 50%;
-    height: 100%;
+  color: white;
+  border: 0;
+  font-size: 100%;
+  float: right;
+  position: relative;
+  cursor: pointer;
+`;
 
-    text-align: center;
-    line-height: 30px;  //match height of container
-    color: white;
-    font-size: 18px;
-
-    cursor: pointer;
-    :hover,
-    :focus {
-      background-color: ${colors.hoverGreen};
-    }
-  `;
-
-  function toggleMakingSubPlaylist(e) {
-    setMakingSubPlaylist(!makingSubPlaylist);
+const PlusButton = styled.button`
+  ${playlistViewItemButtonStyles};
+  background-color: ${colors.darkGreen};
+  :hover {
+    background-color: ${colors.hoverGreen};
   }
+`;
 
-  return(
-    <PlaylistViewOptionsMenuContainer>
-      <PlaylistViewOptionsMenuItem onClick = {toggleMakingSubPlaylist}>
-        {makingSubPlaylist ? 'cancel' : 'Make Sub-Playlist'}
-      </PlaylistViewOptionsMenuItem>
-      <PlaylistViewOptionsMenuItem>Sort</PlaylistViewOptionsMenuItem>
-    </PlaylistViewOptionsMenuContainer>
-  )
-}
+const MinusButton = styled.button`
+  ${playlistViewItemButtonStyles};
+  background-color: ${colors.red};
+  :hover {
+    background-color: ${colors.hoverRed};
+  }
+`;
 
 function PlaylistViewItem(props){
-  const AddToSubPlaylistButton = styled.button`
-    background-color: ${colors.darkGreen};
-    color: white;
-    border: 0;
-    font-size: 100%;
-    float: right;
-    position: relative;
+  function onPlusButtonClick(){
+    console.log("==plus button was clicked for this uri: ", props.track.uri);
+    props.onPlusButtonClick(props.track)
+  }
 
-    :hover {
-      background-color: ${colors.hoverGreen};
-    }
-  `;
+  function onMinusButtonClick(){
+    console.log("==plus button was clicked for this uri: ", props.track.uri);
+    props.onMinusButtonClick(props.track.id)
+  }
 
   return(
     <li>
       <SpotifyPlayer
-        uri={props.uri}
+        uri={props.track.uri}
         playerHeight="80px"
-        playerWidth={props.makingSubPlaylist ? "90%" : "100%"}
+        playerWidth={props.hasPlusButton || props.hasMinusButton ? "90%" : "100%"}
       />
-      {props.makingSubPlaylist && <AddToSubPlaylistButton>+</AddToSubPlaylistButton>}
+      {props.hasPlusButton && <PlusButton onClick={onPlusButtonClick}>+</PlusButton>}
+      {props.hasMinusButton && <MinusButton onClick={onMinusButtonClick}>-</MinusButton>}
     </li>
   )
 }
 
-function PlaylistView({ playlist }) {
-  const [ makingSubPlaylist, setMakingSubPlaylist ] = useState(false);
+function PlaylistView(props) {
   const styles = css`
     list-style: none;
-    width: 45%;
+    padding: 0;
   `;
   return (
     <ul css={styles}>
-      <PlaylistViewOptionsMenu
-        makingSubPlaylist = {makingSubPlaylist}
-        setMakingSubPlaylist = {setMakingSubPlaylist}
-      />
-      {playlist.map(track =>
+      {props.playlist.map(track =>
         <PlaylistViewItem
-          key={track.id}
-          imgUrl={track.album.images[0].url}
-          songName={track.name}
-          uri={track.uri}
-          makingSubPlaylist = {makingSubPlaylist}
+          track = {track}
+          hasPlusButton = {props.hasPlusButton}
+          hasMinusButton = {props.hasMinusButton}
+          onPlusButtonClick = {props.onPlusButtonClick}
+          onMinusButtonClick = {props.onMinusButtonClick}
         />
       )}
     </ul>
