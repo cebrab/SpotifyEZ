@@ -20,7 +20,7 @@ const StyledSidebar = styled.div`
     border-width: 1px;
     border-color: grey;
     border-radius: 4px;
-    background-color: #121212;
+    background-color: ${colors.darkGreen};
     color: white;
 
     overflow-y:scroll;

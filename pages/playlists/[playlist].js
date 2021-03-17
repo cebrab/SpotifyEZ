@@ -2,13 +2,31 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import colors from '../../styles/colors'
+import axios from 'axios';
+import colors from '../../styles/colors';
 
 import PlaylistView from '../../components/PlaylistView';
 import PlaylistViewOptionsMenu from '../../components/PlaylistViewOptionsMenu'
 import PlaylistViewColumn from '../../components/PlaylistViewColumn'
 import Layout from '../../components/Layout';
 import { getPlaylistById } from '../../store/actions/playlistAction';
+
+const getOptions = (accessToken, url) => {
+  const options = {
+    url: url,
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + accessToken,
+      'Content-Type': 'application/json',
+    },
+    data: JSON.stringify({
+      name: 'New Playlist',
+      description: "New playlist description",
+      public: false
+    })
+  }
+  return options
+}
 
 const PlaylistViewPageContainer = styled.div`
   display: flex;
@@ -55,9 +73,44 @@ function PlaylistViewPage() {
       ])
     }
 
-    function removeFromSubPlaylist(id){
-      //TODO: This function somehow removes everything from sub playlist.
-      setSubPlaylist(subPlaylist.filter(track => track.id !== id))
+    function removeFromSubPlaylist(uri){
+      //TODO: Is there a way to not remove duplicate songs?
+      setSubPlaylist(subPlaylist.filter(track => track.uri !== uri))
+    }
+
+    function saveSubPlaylist(){
+        async function makeNewPlaylist(){
+          try {
+            const url = 'https://api.spotify.com/v1/users/me/playlists'
+            axios.post(getOptions(accessToken, url))
+            .then(function(response) {
+              console.log("response ID", response)
+            })
+          } catch (e) {
+            if (e instanceof DOMException) {
+              console.log("HTTP request aborted");
+            } else {
+              console.log(e);
+            }
+          }
+        }
+        makeNewPlaylist();
+
+        // async function putItemsInPlaylist(){
+        //   try {
+        //     const url = 'https://api.spotify.com/v1/playlists/{playlist_id}/tracks'
+        //     axios.post(getOptions(accessToken, url))
+        //     .then(function(response) {
+        //       console.log("Putting Items in that new playlist: ", response);
+        //     })
+        //   } catch (e) {
+        //     if (e instanceof DOMException) {
+        //       console.log("HTTP request aborted");
+        //     } else {
+        //       console.log(e);
+        //     }
+        //   }
+        // }
     }
 
     return(
@@ -87,7 +140,7 @@ function PlaylistViewPage() {
                   onMinusButtonClick={removeFromSubPlaylist}
                 />
                 {subPlaylist.length > 0 &&
-                  <SaveSubPlaylistButton>Save Sub-Playlist</SaveSubPlaylistButton>
+                  <SaveSubPlaylistButton onClick={() => {saveSubPlaylist()}}>Save Sub-Playlist</SaveSubPlaylistButton>
                 }
               </PlaylistViewColumn>
             }

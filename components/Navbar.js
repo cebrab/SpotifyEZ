@@ -91,7 +91,7 @@ function Navbar() {
         top: 0;
         left: 0;
         position: fixed;
-        background-color: #121212;
+        background-color: ${colors.black};
         border-style: solid;
         border-width: 1px;
         border-color: grey;
