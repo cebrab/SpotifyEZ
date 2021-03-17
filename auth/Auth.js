@@ -8,7 +8,9 @@ export const getAuthorizeHref = () => {
   const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize'
   const SCOPES = [
     'user-read-private',
-    'user-read-email'
+    'user-read-email',
+    'playlist-modify-public',
+    'playlist-modify-private'
   ]
   return `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES.join("%20")}&response_type=token`
 }

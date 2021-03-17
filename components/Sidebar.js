@@ -62,12 +62,16 @@ function Sidebar() {
         align-items: center;
         justify-content: center;
         font-size: 20px;
-        position: absolute;
     `;
 
     return (
         <StyledSidebar>
             <PlaylistsList>
+              <Link href="/SpotifyTinderPage">
+                  <span css={newPlaylistButtonStyles}>
+                      <FaPlus css={css({height:'100%'})} />
+                  </span>
+              </Link>
               { playlists && playlists.map(playlist => (
                     <Link href={`/playlists/${playlist.id}`} key={playlist.id}>
                         <img
@@ -78,11 +82,7 @@ function Sidebar() {
                         />
                     </Link>
                 ))}
-                <Link href="/SpotifyTinderPage">
-                    <span css={newPlaylistButtonStyles}>
-                        <FaPlus  />
-                    </span>
-                </Link>
+
             </PlaylistsList>
 
         </StyledSidebar>
