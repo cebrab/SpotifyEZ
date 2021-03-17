@@ -40,7 +40,7 @@ function PlaylistViewItem(props){
   }
 
   function onMinusButtonClick(){
-    console.log("==plus button was clicked for this uri: ", props.track.uri);
+    console.log("==minus button was clicked for this uri: ", props.track.uri);
     props.onMinusButtonClick(props.track.id)
   }
 

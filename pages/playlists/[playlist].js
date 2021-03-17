@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import colors from '../../styles/colors'
 
 import PlaylistView from '../../components/PlaylistView';
 import PlaylistViewOptionsMenu from '../../components/PlaylistViewOptionsMenu'
@@ -12,6 +13,24 @@ import { getPlaylistById } from '../../store/actions/playlistAction';
 const PlaylistViewPageContainer = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const SaveSubPlaylistButton = styled.button`
+  position: fixed;
+  bottom: 40px;
+  right: 12.5%;
+  width: 200px;
+  height: 60px;
+  cursor: pointer;
+  border: 0;
+  border-radius:10px;
+  font-size: 125%;
+  color: white;
+  background-color: ${colors.darkGreen};
+
+  :hover {
+    background-color: ${colors.hoverGreen};
+  }
 `;
 
 function PlaylistViewPage() {
@@ -37,7 +56,8 @@ function PlaylistViewPage() {
     }
 
     function removeFromSubPlaylist(id){
-      setSubPlaylist(subPlaylist.filter(track => track.id != id))
+      //TODO: This function somehow removes everything from sub playlist.
+      setSubPlaylist(subPlaylist.filter(track => track.id !== id))
     }
 
     return(
@@ -66,6 +86,9 @@ function PlaylistViewPage() {
                   hasMinusButton={true}
                   onMinusButtonClick={removeFromSubPlaylist}
                 />
+                {subPlaylist.length > 0 &&
+                  <SaveSubPlaylistButton>Save Sub-Playlist</SaveSubPlaylistButton>
+                }
               </PlaylistViewColumn>
             }
           </PlaylistViewPageContainer>
