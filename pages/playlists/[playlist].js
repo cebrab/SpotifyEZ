@@ -19,11 +19,11 @@ const getOptions = (accessToken, url) => {
       'Authorization': 'Bearer ' + accessToken,
       'Content-Type': 'application/json',
     },
-    data: JSON.stringify({
-      name: 'New Playlist',
-      description: "New playlist description",
-      public: false
-    })
+    data: {
+      'name': "SpotifyEZ",
+      'description': "New playlist description",
+      'public': 'false'
+    }
   }
   return options
 }
@@ -52,101 +52,127 @@ const SaveSubPlaylistButton = styled.button`
 `;
 
 function PlaylistViewPage() {
-    const router = useRouter()
-    const dispatch = useDispatch()
-    const { accessToken } = useSelector(state => state.auth)
-    const { playlistById } = useSelector(state => state.playlist)
-    const [ makingSubPlaylist, setMakingSubPlaylist ] = useState(false)
-    const [ subPlaylist, setSubPlaylist ] = useState([])
+  const router = useRouter()
+  const dispatch = useDispatch()
+  const { accessToken } = useSelector(state => state.auth)
+  const { playlistById } = useSelector(state => state.playlist)
+  const { user } = useSelector(state => state.user)
+  const [makingSubPlaylist, setMakingSubPlaylist] = useState(false)
+  const [subPlaylist, setSubPlaylist] = useState([])
+  const [playlistId, setPlaylistId] = useState()
 
-    useEffect(() => {
-        dispatch(getPlaylistById(accessToken, router.query.playlist))
-        setSubPlaylist([])
-        setMakingSubPlaylist(false)
-    }, [router.query])
+  useEffect(() => {
+    dispatch(getPlaylistById(accessToken, router.query.playlist))
+    setSubPlaylist([])
+    setMakingSubPlaylist(false)
+  }, [router.query])
 
-    function addToSubPlaylist(track){
-      setSubPlaylist([{
-          uri: track.uri,
-        },
-        ...subPlaylist
-      ])
-    }
+  function addToSubPlaylist(track) {
+    setSubPlaylist([{
+      uri: track.uri,
+    },
+    ...subPlaylist
+    ])
+  }
 
-    function removeFromSubPlaylist(uri){
-      //TODO: Is there a way to not remove duplicate songs?
-      setSubPlaylist(subPlaylist.filter(track => track.uri !== uri))
-    }
+  function removeFromSubPlaylist(uri) {
+    //TODO: Is there a way to not remove duplicate songs?
+    setSubPlaylist(subPlaylist.filter(track => track.uri !== uri))
+  }
 
-    function saveSubPlaylist(){
-        async function makeNewPlaylist(){
-          try {
-            const url = 'https://api.spotify.com/v1/users/me/playlists'
-            axios.post(getOptions(accessToken, url))
-            .then(function(response) {
-              console.log("response ID", response)
-            })
-          } catch (e) {
-            if (e instanceof DOMException) {
-              console.log("HTTP request aborted");
-            } else {
-              console.log(e);
-            }
-          }
+  async function saveSubPlaylist() {
+
+    async function makeNewPlaylist() {
+      try {
+        const url = `https://api.spotify.com/v1/users/${user.id}/playlists`
+        axios(getOptions(accessToken, url))
+          .then(function (response) {
+            console.log("response ID", response)
+            setPlaylistId(response.data.id)
+            console.log("Within Async", response.data.id)
+
+            // return response.data.id
+            putItemsInPlaylist(playlistId)
+          })
+      } catch (e) {
+        if (e instanceof DOMException) {
+          console.log("HTTP request aborted");
+        } else {
+          console.log(e);
         }
-        makeNewPlaylist();
-
-        // async function putItemsInPlaylist(){
-        //   try {
-        //     const url = 'https://api.spotify.com/v1/playlists/{playlist_id}/tracks'
-        //     axios.post(getOptions(accessToken, url))
-        //     .then(function(response) {
-        //       console.log("Putting Items in that new playlist: ", response);
-        //     })
-        //   } catch (e) {
-        //     if (e instanceof DOMException) {
-        //       console.log("HTTP request aborted");
-        //     } else {
-        //       console.log(e);
-        //     }
-        //   }
-        // }
+      }
     }
 
-    return(
-        <Layout>
-          <PlaylistViewPageContainer>
-            {playlistById &&
-              <PlaylistViewColumn>
-                <h1>{playlistById.name}</h1>
-                <PlaylistViewOptionsMenu
-                  makingSubPlaylist = {makingSubPlaylist}
-                  setMakingSubPlaylist = {setMakingSubPlaylist}
-                  onCancelButtonClick = {() => {setSubPlaylist([])}}
-                />
-                <PlaylistView
-                  playlist={playlistById.tracks.items.map(item => item.track)}
-                  hasPlusButton={makingSubPlaylist}
-                  onPlusButtonClick={addToSubPlaylist}
-                />
-              </PlaylistViewColumn>
+
+
+    async function putItemsInPlaylist() {
+      const options = {
+
+        // url: `https://api.spotify.com/v1/playlists/${id}/tracks?uri=${subPlaylist.map((uri) => uri.uri)}`,
+        url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${encodeURIComponent(subPlaylist.map((uri) => uri.uri))}`,
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + accessToken,
+          'Content-Type': 'application/json',
+        }
+      }
+      try {
+        // const url = `https://api.spotify.com/v1/playlists/${id}/tracks?uri=${encodeURIComponent(subPlaylist.map((uri) => uri.uri))}`
+        console.log("optionssss", options)
+        axios(options)
+          .then(function (response) {
+            console.log("Putting Items in that new playlist: ", response);
+          })
+      } catch (e) {
+        if (e instanceof DOMException) {
+          console.log("HTTP request aborted");
+        } else {
+          console.log(e);
+        }
+      }
+    }
+
+
+    const id = await makeNewPlaylist().then(console.log("IDDDDDDDD", playlistId)).then(putItemsInPlaylist(playlistId));
+
+
+
+  }
+
+  return (
+    <Layout>
+      <PlaylistViewPageContainer>
+        {playlistById &&
+          <PlaylistViewColumn>
+            <h1>{playlistById.name}</h1>
+            <PlaylistViewOptionsMenu
+              makingSubPlaylist={makingSubPlaylist}
+              setMakingSubPlaylist={setMakingSubPlaylist}
+              onCancelButtonClick={() => { setSubPlaylist([]) }}
+            />
+            <PlaylistView
+              playlist={playlistById.tracks.items.map(item => item.track)}
+              hasPlusButton={makingSubPlaylist}
+              onPlusButtonClick={addToSubPlaylist}
+            />
+          </PlaylistViewColumn>
+        }
+        {playlistById && makingSubPlaylist &&
+          <PlaylistViewColumn>
+            <h1>Sub Playlist</h1>
+            <PlaylistView
+              playlist={subPlaylist}
+              hasMinusButton={true}
+              onMinusButtonClick={removeFromSubPlaylist}
+            />
+            {subPlaylist.length > 0 &&
+              <SaveSubPlaylistButton onClick={() => { saveSubPlaylist() }}>Save Sub-Playlist</SaveSubPlaylistButton>
             }
-            {playlistById && makingSubPlaylist &&
-              <PlaylistViewColumn>
-                <h1>Sub Playlist</h1>
-                <PlaylistView
-                  playlist={subPlaylist}
-                  hasMinusButton={true}
-                  onMinusButtonClick={removeFromSubPlaylist}
-                />
-                {subPlaylist.length > 0 &&
-                  <SaveSubPlaylistButton onClick={() => {saveSubPlaylist()}}>Save Sub-Playlist</SaveSubPlaylistButton>
-                }
-              </PlaylistViewColumn>
-            }
-          </PlaylistViewPageContainer>
-        </Layout>
-    )
+          </PlaylistViewColumn>
+        }
+      </PlaylistViewPageContainer>
+    </Layout>
+  )
 }
 
 export default PlaylistViewPage;
