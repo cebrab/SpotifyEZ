@@ -1,8 +1,11 @@
 import styled from '@emotion/styled'
 import colors from '../styles/colors'
 import breakpoints from '../styles/breakpoints'
+import { useRouter } from 'next/router';
 
 function PlaylistViewOptionsMenu({makingSubPlaylist, setMakingSubPlaylist, onCancelButtonClick}) {
+  const router = useRouter()
+
   const PlaylistViewOptionsMenuContainer = styled.div`
     width: 100%;
     height: 30px;
@@ -10,9 +13,11 @@ function PlaylistViewOptionsMenu({makingSubPlaylist, setMakingSubPlaylist, onCan
     margin-bottom: 5px;
   `;
 
+
+
   const PlaylistViewOptionsMenuItem = styled.span`
     float: left;
-    width: 100%; //change this if add more menu items
+    width: 50%; //change this if add more menu items
     height: 100%;
 
     text-align: center;
@@ -26,6 +31,12 @@ function PlaylistViewOptionsMenu({makingSubPlaylist, setMakingSubPlaylist, onCan
       background-color: ${makingSubPlaylist ? colors.hoverRed : colors.hoverGreen};
     }
   `;
+  function onSwipeButtonClick() {
+    router.push({
+      pathname: '/SpotifyTinderPage',
+      query: 'playlistId=' + router.query.playlist
+    })
+  }
 
   function toggleMakingSubPlaylist() {
     makingSubPlaylist && onCancelButtonClick();
@@ -40,7 +51,8 @@ function PlaylistViewOptionsMenu({makingSubPlaylist, setMakingSubPlaylist, onCan
       </PlaylistViewOptionsMenuItem>
       {
         //TODO: Implement Sorting
-        // <PlaylistViewOptionsMenuItem>Sort</PlaylistViewOptionsMenuItem>
+       <PlaylistViewOptionsMenuItem onClick= {onSwipeButtonClick}
+       >Add to Playlist</PlaylistViewOptionsMenuItem>
       }
     </PlaylistViewOptionsMenuContainer>
   )
