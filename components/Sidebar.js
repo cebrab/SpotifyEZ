@@ -75,7 +75,11 @@ function Sidebar() {
               { playlists && playlists.map(playlist => (
                     <Link href={`/playlists/${playlist.id}`} key={playlist.id}>
                         <img
-                            src={playlist.images[0].url}
+                            src={
+                              playlist.images[0] ?
+                              playlist.images[0].url :
+                              "/images/spotify-logo.png"
+                            }
                             css={sidebarIconStyles}
                             title={playlist.name}
                             alt={playlist.name}

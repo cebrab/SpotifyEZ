@@ -2,6 +2,7 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import colors from '../styles/colors'
+import PropTypes from 'prop-types';
 
 import SpotifyPlayer from './SpotifyPlayer'
 
@@ -35,12 +36,10 @@ const MinusButton = styled.button`
 
 function PlaylistViewItem(props){
   function onPlusButtonClick(){
-    console.log("==plus button was clicked for this uri: ", props.track.uri);
     props.onPlusButtonClick(props.track)
   }
 
   function onMinusButtonClick(){
-    console.log("==minus button was clicked for this uri: ", props.track.uri);
     props.onMinusButtonClick(props.track.uri)
   }
 
@@ -66,6 +65,7 @@ function PlaylistView(props) {
     <ul css={styles}>
       {props.playlist.map(track =>
         <PlaylistViewItem
+          key = {track.id}
           track = {track}
           hasPlusButton = {props.hasPlusButton}
           hasMinusButton = {props.hasMinusButton}
@@ -75,6 +75,21 @@ function PlaylistView(props) {
       )}
     </ul>
   )
+}
+
+PlaylistView.propTypes = {
+  playlist: PropTypes.object.isRequired,
+  hasPlusButton: PropTypes.boolean,
+  hasMinusButton: PropTypes.boolean,
+  onPlusButtonClick: PropTypes.function,
+  onMinusButtonClick: PropTypes.function
+}
+
+PlaylistView.defaultProps = {
+  hasPlusButton: false,
+  hasMinusButton: false,
+  onPlusButtonClick: null,
+  onMinusButtonClick: null
 }
 
 export default PlaylistView;

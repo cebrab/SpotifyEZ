@@ -11,23 +11,6 @@ import PlaylistViewColumn from '../../components/PlaylistViewColumn'
 import Layout from '../../components/Layout';
 import { getPlaylistById } from '../../store/actions/playlistAction';
 
-const getOptions = (accessToken, url) => {
-  const options = {
-    url: url,
-    method: 'POST',
-    headers: {
-      'Authorization': 'Bearer ' + accessToken,
-      'Content-Type': 'application/json',
-    },
-    data: {
-      'name': "SpotifyEZ",
-      'description': "New playlist description",
-      'public': 'false'
-    }
-  }
-  return options
-}
-
 const PlaylistViewPageContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -83,16 +66,30 @@ function PlaylistViewPage() {
   async function saveSubPlaylist() {
 
     async function makeNewPlaylist() {
+      const getOptions = (accessToken, url, data) => {
+        return {
+            url: url,
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer ' + accessToken,
+              'Content-Type': 'application/json',
+            },
+            data: data
+        }
+      }
       try {
         const url = `https://api.spotify.com/v1/users/${user.id}/playlists`
-        axios(getOptions(accessToken, url))
+        axios(getOptions(accessToken, url, {
+          'name': "SpotifyEZ",
+          'description': "New playlist description",
+          'public': 'false'
+        }))
           .then(function (response) {
-            console.log("response ID", response)
+            console.log("Make new playlist response:", response)
             setPlaylistId(response.data.id)
-            console.log("Within Async", response.data.id)
-
-            // return response.data.id
-            putItemsInPlaylist(playlistId)
+            putItemsInPlaylist(response.data.id)
+            setSubPlaylist([])
+            setMakingSubPlaylist(false)
           })
       } catch (e) {
         if (e instanceof DOMException) {
@@ -103,13 +100,9 @@ function PlaylistViewPage() {
       }
     }
 
-
-
-    async function putItemsInPlaylist() {
+    async function putItemsInPlaylist(id) {
       const options = {
-
-        // url: `https://api.spotify.com/v1/playlists/${id}/tracks?uri=${subPlaylist.map((uri) => uri.uri)}`,
-        url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${encodeURIComponent(subPlaylist.map((uri) => uri.uri))}`,
+        url: `https://api.spotify.com/v1/playlists/${id}/tracks?uris=${encodeURIComponent(subPlaylist.map((uri) => uri.uri))}`,
         method: 'POST',
         headers: {
           'Authorization': 'Bearer ' + accessToken,
@@ -117,8 +110,6 @@ function PlaylistViewPage() {
         }
       }
       try {
-        // const url = `https://api.spotify.com/v1/playlists/${id}/tracks?uri=${encodeURIComponent(subPlaylist.map((uri) => uri.uri))}`
-        console.log("optionssss", options)
         axios(options)
           .then(function (response) {
             console.log("Putting Items in that new playlist: ", response);
@@ -132,43 +123,41 @@ function PlaylistViewPage() {
       }
     }
 
-
-    const id = await makeNewPlaylist().then(console.log("IDDDDDDDD", playlistId)).then(putItemsInPlaylist(playlistId));
-
-
-
+    makeNewPlaylist()
   }
 
   return (
     <Layout>
       <PlaylistViewPageContainer>
         {playlistById &&
-          <PlaylistViewColumn>
-            <h1>{playlistById.name}</h1>
-            <PlaylistViewOptionsMenu
-              makingSubPlaylist={makingSubPlaylist}
-              setMakingSubPlaylist={setMakingSubPlaylist}
-              onCancelButtonClick={() => { setSubPlaylist([]) }}
-            />
-            <PlaylistView
-              playlist={playlistById.tracks.items.map(item => item.track)}
-              hasPlusButton={makingSubPlaylist}
-              onPlusButtonClick={addToSubPlaylist}
-            />
-          </PlaylistViewColumn>
+          <PlaylistViewColumn
+            playlistTitle={playlistById.name}
+            playlist={playlistById.tracks.items.map(item => item.track)}
+            hasPlusButton={makingSubPlaylist}
+            onPlusButtonClick={addToSubPlaylist}
+            menu = {
+              <PlaylistViewOptionsMenu
+                makingSubPlaylist={makingSubPlaylist}
+                setMakingSubPlaylist={setMakingSubPlaylist}
+                onCancelButtonClick={() => { setSubPlaylist([]) }}
+              />
+            }
+          />
         }
-        {playlistById && makingSubPlaylist &&
-          <PlaylistViewColumn>
-            <h1>Sub Playlist</h1>
-            <PlaylistView
+        {playlistById && makingSubPlaylist && [
+            <PlaylistViewColumn
+              playlistTitle="Sub-Playlist"
               playlist={subPlaylist}
               hasMinusButton={true}
               onMinusButtonClick={removeFromSubPlaylist}
-            />
-            {subPlaylist.length > 0 &&
-              <SaveSubPlaylistButton onClick={() => { saveSubPlaylist() }}>Save Sub-Playlist</SaveSubPlaylistButton>
-            }
-          </PlaylistViewColumn>
+            />,
+            (subPlaylist.length > 0 &&
+              <SaveSubPlaylistButton
+                onClick={() => { saveSubPlaylist() }}>
+                Save Sub-Playlist
+              </SaveSubPlaylistButton>
+            )
+          ]
         }
       </PlaylistViewPageContainer>
     </Layout>
