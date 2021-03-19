@@ -20,7 +20,8 @@ function PlaylistViewPage() {
   useEffect(() => {
     setSubPlaylist([])
     setMakingSubPlaylist(false)
-  }, [])
+  }, [router.query])
+
 
   function addToSubPlaylist(track) {
     setSubPlaylist([
