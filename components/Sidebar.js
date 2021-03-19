@@ -67,7 +67,7 @@ function Sidebar() {
     return (
         <StyledSidebar>
             <PlaylistsList>
-            <Link href={{pathname: "/SpotifyTinderPage", query: {playlistId: null, oneSongSeed: "48tAdjG4ng2JfECa7OQujk"}}}>
+            <Link href={{pathname: "/SpotifyTinderPage", query: {playlistId: null, oneSongSeed: null}}}>
                 <span css={newPlaylistButtonStyles}>
                     <FaPlus css={css({height:'100%'})} />
                 </span>
