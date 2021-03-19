@@ -10,7 +10,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux'
 import { getSongRecommendations } from '../store/actions/songAction';
-import PlaylistViewColumn from '../components/PlaylistViewColumn'
+import PlaylistColumn from '../components/PlaylistColumn'
 
 //note track is an array with one object, and that object contains
 export default function TestHalfPagePlaylist() {
@@ -310,11 +310,12 @@ export default function TestHalfPagePlaylist() {
 
     <div css={SpotifyTinderPageContainerStyling}>
       <SpotifyTinder playlist={recommendations ? recommendations.tracks : dummyData.tracks} SwipeRight={swipeRight}/>
-      <PlaylistViewColumn playlist={[]}
+      <PlaylistColumn playlist={[]}
                           addedSongs={swipeRightList ? swipeRightList : dummyData.tracks}
                           playlistTitle={"New playlist"}
                           setPlaylist={addSwipeRightList}
                           hasMinusButton={true}
+                          playlistId={router.query.playlistId}
       />
     </div>
 

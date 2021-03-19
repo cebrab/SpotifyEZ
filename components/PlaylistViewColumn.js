@@ -120,6 +120,8 @@ function PlaylistViewColumn(props) {
       putItemsInPlaylist(props.playlistId)
     } else {
       console.log("Making a new playlist");
+      //TOGGLE MODAL, let the user enter the playlist data
+      //onSUBMIT, pass data to makeNewPlaylist
       makeNewPlaylist()
     }
   }
