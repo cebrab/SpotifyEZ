@@ -1,18 +1,7 @@
 import * as types from '../types'
 import axios from 'axios'
 
-const getOptions = (accessToken, url) => {
-  const options = {
-    url: url,
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Authorization': 'Bearer ' + accessToken,
-      'Content-Type': 'application/json',
-    }
-  }
-  return options
-}
+import { getOptions } from '../utils'
 
 // Get a List of Current User's Playlists
 export const getUserPlaylist = (accessToken) => async dispatch => {

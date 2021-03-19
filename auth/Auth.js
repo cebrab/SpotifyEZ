@@ -11,7 +11,8 @@ export const getAuthorizeHref = () => {
     'user-read-email',
     'playlist-modify-public',
     'playlist-modify-private',
-    'playlist-read-private'
+    'playlist-read-private',
+    'user-read-recently-played'
   ]
   return `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES.join("%20")}&response_type=token`
 }

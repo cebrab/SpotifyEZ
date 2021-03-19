@@ -1,18 +1,7 @@
 import * as types from '../types'
 import axios from 'axios'
 
-const getOptions = (accessToken, url) => {
-  const options = {
-    url: url,
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Authorization': 'Bearer ' + accessToken,
-      'Content-Type': 'application/json',
-    }
-  }
-  return options
-}
+import { getOptions } from '../utils'
 
 export const getGenreSeeds = (accessToken) => async dispatch => {
   const url = 'https://api.spotify.com/v1/recommendations/available-genre-seeds'
@@ -47,5 +36,14 @@ export const getSongs = (accessToken, query) => async dispatch => {
   dispatch({
     type: types.GET_SONGS,
     searchSongs: res.data
+  })
+}
+
+export const getRecents = (accessToken, query) => async dispatch => {
+  const url = `https://api.spotify.com/v1/me/player/recently-played`
+  const res = await axios(getOptions(accessToken, url))
+  dispatch({
+    type: types.GET_RECENTS,
+    recentSongs: res.data
   })
 }

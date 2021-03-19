@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -8,12 +7,9 @@ import PlaylistColumn from '../../components/PlaylistColumn'
 import PlaylistView from '../../components/PlaylistView';
 import PlaylistViewOptionsMenu from '../../components/PlaylistViewOptionsMenu'
 import PlaylistViewColumn from '../../components/PlaylistViewColumn'
-import Layout from '../../components/Layout';
+import Layout from '../../components/Layout'
+import TwoColumnLayout from '../../components/TwoColumnLayout'
 
-const PlaylistViewPageContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
 
 function PlaylistViewPage() {
   const router = useRouter()
@@ -38,7 +34,7 @@ function PlaylistViewPage() {
 
   return (
     <Layout>
-      <PlaylistViewPageContainer>
+      <TwoColumnLayout>
         <PlaylistColumn
           playlistId={router.query.playlist}
           hasPlusButton={makingSubPlaylist}
@@ -63,7 +59,7 @@ function PlaylistViewPage() {
             />
           ]
         }
-      </PlaylistViewPageContainer>
+      </TwoColumnLayout>
     </Layout>
   )
 }

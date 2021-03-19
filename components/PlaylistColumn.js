@@ -19,8 +19,7 @@ function PlaylistColumn(props) {
       console.log("==Getting playlist with ID: ", props.playlistId);
       dispatch(getPlaylistById(accessToken, props.playlistId))
     } else {
-      console.log("Rendering a client-side playlist");
-      playlistById
+      console.log("Rendering a client-side playlist", props.playlist);
     }
   }, [props.playlistId])
 

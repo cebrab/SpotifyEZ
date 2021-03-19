@@ -24,7 +24,12 @@ const songReducer = (state = initialState, action) => {
         ...state,
         searchSongs: action.searchSongs
       }
-    
+    case types.GET_RECENTS:
+      return {
+        ...state,
+        recentSongs: action.recentSongs
+      }
+
     default:
       return state
   }

@@ -6,6 +6,9 @@ import { useSelector } from 'react-redux'
 import UserProfile from '../components/UserProfile'
 import Recommendations from '../components/Recommendations'
 import UserCurrentPlaylist from '../components/UserCurrentPlaylist'
+import RecentlyPlayedSongsView from '../components/RecentlyPlayedSongsView'
+
+import TwoColumnLayout from '../components/TwoColumnLayout'
 
 
 const Home = () => {
@@ -16,9 +19,10 @@ const Home = () => {
       { isAuthed === true &&
         <>
           <Layout>
-            <UserProfile />
-            <Recommendations />
-            <UserCurrentPlaylist />
+
+              <UserProfile />
+              <RecentlyPlayedSongsView />
+
           </Layout>
         </>
       }
