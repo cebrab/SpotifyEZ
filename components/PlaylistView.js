@@ -65,7 +65,7 @@ function PlaylistView(props) {
     <ul css={styles}>
       {props.playlist.map(track =>
         <PlaylistViewItem
-          key = {track.id}
+          key = {track.uri}
           track = {track}
           hasPlusButton = {props.hasPlusButton}
           hasMinusButton = {props.hasMinusButton}
