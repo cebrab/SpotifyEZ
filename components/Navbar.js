@@ -222,15 +222,15 @@ function Navbar() {
                     <Menu right styles={burgerMenuStyles}>
                         <a href="/" css={burgerMenuItemStyles}>Home</a>
                         <a href="about" css={burgerMenuItemStyles}>About</a>
-                        <a href="#" css={burgerMenuItemStyles}>Log Out</a>
+                        <a href="/" css={burgerMenuItemStyles}>Log Out</a>
                     </Menu>
                 </> :
                 <div css={navbarStyles}>
-                    <a css={siteTitleStyles} href="#">SpotifyEZ</a>
-                    <a css={navItemStyles} href="#">Home</a>
-                    <a css={navItemStyles} href="#">About</a>
+                    <a css={siteTitleStyles} href="/">SpotifyEZ</a>
+                    <a css={navItemStyles} href="/">Home</a>
+                    <a css={navItemStyles} href="about">About</a>
                     <SearchBar />
-                    <a css={logOutButtonStyles} href="#">Log Out</a>
+                    <a css={logOutButtonStyles} href="/">Log Out</a>
                 </div>
             }
         </>

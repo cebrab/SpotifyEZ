@@ -161,8 +161,7 @@ PlaylistViewColumn.propTypes = {
   menu: PropTypes.element,
   hasPlusButton: PropTypes.boolean,
   hasMinusButton: PropTypes.boolean,
-  onPlusButtonClick: PropTypes.func,
-  onMinusButtonClick: PropTypes.func
+  onPlusButtonClick: PropTypes.func
 }
 
 PlaylistViewColumn.defaultProps = {
@@ -172,8 +171,7 @@ PlaylistViewColumn.defaultProps = {
   menu: null,
   hasPlusButton: false,
   hasMinusButton: false,
-  onPlusButtonClick: null,
-  onMinusButtonClick: null
+  onPlusButtonClick: null
 }
 
 export default PlaylistViewColumn;
