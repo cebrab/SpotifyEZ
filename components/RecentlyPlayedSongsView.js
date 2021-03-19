@@ -22,7 +22,7 @@ function RecentlyPlayedSongsView() {
     function onPlusButtonClick(track) {
       router.push({
         pathname: '/SpotifyTinderPage',
-        query: track.uri
+        query: 'oneSongSeed=' + track.id
       })
     }
 
