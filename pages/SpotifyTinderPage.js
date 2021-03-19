@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getSongRecommendations } from '../store/actions/songAction';
 import PlaylistColumn from '../components/PlaylistColumn'
 import PlaylistViewColumn from '../components/PlaylistViewColumn';
+import { getRecents } from '../store/actions/songAction';
 
 //note track is an array with one object, and that object contains
 export default function TestHalfPagePlaylist() {
@@ -20,7 +21,7 @@ export default function TestHalfPagePlaylist() {
   const { accessToken } = useSelector(state => state.auth)
   const { recommendations } = useSelector(state => state.song)
   const [swipeRightList, addSwipeRightList] = useState([])
-
+  const { recentSongs } = useSelector(state => state.song)
   function swipeRight(songObject){
     addSwipeRightList([...swipeRightList, songObject])
     console.log("Song object: " + songObject)
@@ -30,7 +31,15 @@ export default function TestHalfPagePlaylist() {
 
   useEffect(() => {
     console.log("query seed is : " + router.query.oneSongSeed)
-    dispatch(getSongRecommendations(accessToken, router.query.oneSongSeed))
+    if (router.query.oneSongSeed){
+      dispatch(getSongRecommendations(accessToken, router.query.oneSongSeed))
+    }
+    else {
+      dispatch(getRecents(accessToken))
+      dispatch(getSongRecommendations(accessToken, recentSongs.items[0].track.id))
+      console.log("recent song first item: "+ recentSongs.items[0].track.id);
+    }
+
   }, [])
 
   console.log('Recommendation === ', recommendations)
@@ -296,7 +305,7 @@ export default function TestHalfPagePlaylist() {
     <Layout>
 
     <div css={SpotifyTinderPageContainerStyling}>
-      <SpotifyTinder playlist={recommendations ? recommendations.tracks : dummyData.tracks} SwipeRight={swipeRight}/>
+      <SpotifyTinder playlist={recommendations  ? recommendations.tracks : dummyData.tracks} SwipeRight={swipeRight}/>
       <>
       {router.query.playlistId ?
         <PlaylistColumn
