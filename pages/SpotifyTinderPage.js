@@ -6,12 +6,29 @@ import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux'
+import { getSongRecommendations } from '../store/actions/songAction';
 //note track is an array with one object, and that object contains
 export default function TestHalfPagePlaylist() {
+  const router = useRouter();
+  const dispatch = useDispatch()
+  const { accessToken } = useSelector(state => state.auth)
+  const { recommendations } = useSelector(state => state.song)
+  console.log(router.query)
+
+  useEffect(() => {
+    console.log("query seed is : " + router.query.oneSongSeed)
+    dispatch(getSongRecommendations(accessToken, router.query.oneSongSeed))
+  }, [])
+
+  console.log('Recommendation === ', recommendations)
+
   const SpotifyTinderPageContainerStyling = css`
     display:flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-evenly;
   `;
   const [dummyData, setDummyData] = useState({
@@ -283,8 +300,8 @@ export default function TestHalfPagePlaylist() {
     `}</style>
 
     <div css={SpotifyTinderPageContainerStyling}>
-      <SpotifyTinder playlist={dummyData.tracks}/>
-      <HalfPagePlaylist playlist={dummyData.tracks}/>
+      <SpotifyTinder playlist={recommendations ? recommendations.tracks : dummyData.tracks}/>
+      <HalfPagePlaylist playlist={recommendations ? recommendations.tracks : dummyData.tracks}/>
     </div>
 
 
