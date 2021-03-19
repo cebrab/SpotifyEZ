@@ -33,6 +33,7 @@ export const getSongRecommendations = (accessToken, query) => async dispatch => 
 export const getSongs = (accessToken, query) => async dispatch => {
   const url = `https://api.spotify.com/v1/search?q=${query}&type=track&market=US&limit=10`
   const res = await axios(getOptions(accessToken, url))
+  console.log("==Searh results: ", res.data);
   dispatch({
     type: types.GET_SONGS,
     searchSongs: res.data

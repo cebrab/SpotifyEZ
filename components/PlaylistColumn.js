@@ -55,7 +55,7 @@ PlaylistColumn.propTypes = {
   playlistId: PropTypes.string,
   menu: PropTypes.element,
   onPlusButtonClick: PropTypes.func,
-  setPlaylist: PropTypes.func.isRequired,
+  setPlaylist: PropTypes.func,
   playlistTitle: PropTypes.string,
 }
 PlaylistColumn.defaultProps = {

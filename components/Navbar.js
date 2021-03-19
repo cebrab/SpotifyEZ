@@ -5,12 +5,14 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { FaSearch } from 'react-icons/fa';
 import { slide as Menu } from 'react-burger-menu';
+import { useRouter } from 'next/router'
 
 import colors from '../styles/colors';
 import breakpoints from '../styles/breakpoints';
 
 //Search bar for the Navbar
 function SearchBar() {
+    const router = useRouter()
     const [ searchString, setSearchString] = useState('');
 
     //Styles for the search bar
@@ -65,7 +67,10 @@ function SearchBar() {
         <div css={searchBarStyles} >
             <form onSubmit={(e) => {
                 //TODO: Hook this up to send query string parameters to Search page
-                alert("Searched for: " + searchString);
+                router.push({
+                  pathname: '/search',
+                  query: searchString
+                })
                 setSearchString('');
                 e.preventDefault();
             }}>
