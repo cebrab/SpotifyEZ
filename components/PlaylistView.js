@@ -60,12 +60,15 @@ function PlaylistView(props) {
   const styles = css`
     list-style: none;
     padding: 0;
+    display: flex;
+    flex-direction: column-reverse;
   `;
+
   return (
     <ul css={styles}>
-      {props.playlist.map(track =>
+      {props.playlist.map((track, idx) =>
         <PlaylistViewItem
-          key = {track.uri}
+          key = {idx}
           track = {track}
           hasPlusButton = {props.hasPlusButton}
           hasMinusButton = {props.hasMinusButton}

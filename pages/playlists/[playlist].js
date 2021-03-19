@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import colors from '../../styles/colors';
 
-import CurrentPlaylistView from '../../components/CurrentPlaylistView'
+import PlaylistColumn from '../../components/PlaylistColumn'
 import PlaylistView from '../../components/PlaylistView';
 import PlaylistViewOptionsMenu from '../../components/PlaylistViewOptionsMenu'
 import PlaylistViewColumn from '../../components/PlaylistViewColumn'
@@ -27,20 +27,23 @@ function PlaylistViewPage() {
   }, [])
 
   function addToSubPlaylist(track) {
-    setSubPlaylist([{
-      uri: track.uri,
-    },
-    ...subPlaylist
+    setSubPlaylist([
+      ...subPlaylist,
+      {
+        uri: track.uri,
+      }
     ])
+    console.log("==Sub Playlist: ", subPlaylist);
   }
 
   return (
     <Layout>
       <PlaylistViewPageContainer>
-        <CurrentPlaylistView
+        <PlaylistColumn
           playlistId={router.query.playlist}
           hasPlusButton={makingSubPlaylist}
           onPlusButtonClick={addToSubPlaylist}
+          addedSongs={[]}
           menu={
             <PlaylistViewOptionsMenu
               makingSubPlaylist={makingSubPlaylist}
@@ -51,13 +54,12 @@ function PlaylistViewPage() {
         />
 
         {makingSubPlaylist && [
-            <PlaylistViewColumn
+            <PlaylistColumn
               playlistTitle="Sub-Playlist"
               playlist={[]}
               addedSongs={subPlaylist}
               setPlaylist={setSubPlaylist}
               hasMinusButton={true}
-              isNewPlaylist={true}
             />
           ]
         }
