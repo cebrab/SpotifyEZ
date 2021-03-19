@@ -26,24 +26,30 @@ function PlaylistColumn(props) {
     }
   }, [props.playlistId])
 
+  console.log(
+    "PlaylistViewColumn: " +
+    `==playlistById: ${playlistById} \n==playlist: ${props.playlist} \n==playlistId: ${props.playlistId}`
+  );
   return(
     <>
-    {playlistById &&
+    {(playlistById || props.playlist) &&
+      <>
       <PlaylistViewColumn
         {...props}
-        playlistTitle={props.playlistId ?
+        playlistTitle={playlistById ?
           playlistById.name :
           props.playlistTitle
         }
-        playlist={props.playlistId ?
+        playlist={playlistById ?
             playlistById.tracks.items.map(item => item.track) :
             props.playlist
         }
-        setPlaylist={props.playlistId ?
+        setPlaylist={playlistById ?
           (newPlaylist) => {playlistById = newPlaylist}:
           props.setPlaylist
         }
       />
+    </>
     }
     </>
   )

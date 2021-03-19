@@ -64,7 +64,6 @@ function SearchBar() {
         }
     `;
 
-<<<<<<< HEAD
     return (
         <div css={searchBarStyles} >
             <form onSubmit={(e) => {
@@ -87,27 +86,6 @@ function SearchBar() {
             </form>
         </div>
     )
-=======
-  return (
-    <div css={searchBarStyles} >
-      <form onSubmit={(e) => {
-        //TODO: Hook this up to send query string parameters to Search page
-        alert("Searched for: " + searchString);
-        setSearchString('');
-        e.preventDefault();
-      }}>
-        <input
-          value={searchString}
-          placeholder='Search for a song or artist...'
-          onChange={(e) => setSearchString(e.target.value)}
-        />
-        <button type="submit">
-          <FaSearch />
-        </button>
-      </form>
-    </div>
-  )
->>>>>>> f44d9082e6b36890b7cd9087ba4267b727aaa535
 }
 function Navbar() {
   const [showHamnav, setShowHamnav] = useState(false);
