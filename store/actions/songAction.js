@@ -42,6 +42,7 @@ export const getSongs = (accessToken, query) => async dispatch => {
 export const getRecents = (accessToken, query) => async dispatch => {
   const url = `https://api.spotify.com/v1/me/player/recently-played`
   const res = await axios(getOptions(accessToken, url))
+  console.log("log", res.data);
   dispatch({
     type: types.GET_RECENTS,
     recentSongs: res.data

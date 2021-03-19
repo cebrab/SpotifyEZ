@@ -126,6 +126,7 @@ function PlaylistViewColumn(props) {
     }
   }
 
+  console.log("Playlist: ", props.playlist);
   return(
     <div css={styles}>
       <PlaylistTitle>{props.playlistTitle}</PlaylistTitle>

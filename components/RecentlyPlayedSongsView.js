@@ -15,6 +15,10 @@ function RecentlyPlayedSongsView() {
       dispatch(getRecents(accessToken))
     }, [])
 
+    function setPlaylist(newPlaylist) {
+      recentSongs = newPlaylist
+    }
+
     function onPlusButtonClick(track) {
       router.push({
         pathname: '/SpotifyTinderPage',
@@ -22,17 +26,17 @@ function RecentlyPlayedSongsView() {
       })
     }
 
-    console.log("==recentSongs: ", recentSongs && recentSongs.items.map(item => item.track));
+    console.log("==recentSongs: ", recentSongs && recentSongs.items.map(item => item.track.uri));
 
     return(
-      <>
         <PlaylistColumn
           playlist={recentSongs && recentSongs.items.map(item => item.track)}
+          //playlist={[]}
           playlistTitle="Recently Played"
           hasPlusButton={true}
           onPlusButtonClick={onPlusButtonClick}
+          setPlaylist={setPlaylist}
         />
-      </>
 
     )
 }

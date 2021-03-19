@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import Layout from '../components/Layout'
 import Authorization from '../components/Authorization'
-
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux'
 import UserProfile from '../components/UserProfile'
 import Recommendations from '../components/Recommendations'

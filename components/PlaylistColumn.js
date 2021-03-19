@@ -19,13 +19,13 @@ function PlaylistColumn(props) {
       console.log("==Getting playlist with ID: ", props.playlistId);
       dispatch(getPlaylistById(accessToken, props.playlistId))
     } else {
-      console.log("Rendering a client-side playlist", props.playlist);
+      console.log("Rendering a client-side playlist", props.playlist, "\nID: ", props.playlistId);
     }
-  }, [props.playlistId])
+  }, [props.playlistId, props.playlist])
 
   return(
     <>
-    {playlistById &&
+    {playlistById || props.playlist &&
       <PlaylistViewColumn
         {...props}
         playlistTitle={props.playlistId ?
@@ -48,17 +48,19 @@ function PlaylistColumn(props) {
 
 PlaylistColumn.propTypes = {
   addedSongs: PropTypes.array,
+  playlist: PropTypes.array,
   playlistId: PropTypes.string,
   menu: PropTypes.element,
-  hasPlusButton: PropTypes.boolean,
-  onPlusButtonClick: PropTypes.func
+  onPlusButtonClick: PropTypes.func,
+  setPlaylist: PropTypes.func.isRequired,
+  playlistTitle: PropTypes.string,
 }
 PlaylistColumn.defaultProps = {
   addedSongs: [],
+  playlist: [],
   playlistTitle: "",
   playlistId: "",
   menu: null,
-  hasPlusButton: false,
   onPlusButtonClick: null
 }
 
