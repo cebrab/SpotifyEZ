@@ -10,10 +10,22 @@ import UserCurrentPlaylist from '../components/UserCurrentPlaylist'
 import RecentlyPlayedSongsView from '../components/RecentlyPlayedSongsView'
 
 import TwoColumnLayout from '../components/TwoColumnLayout'
-
+import Cookies from 'universal-cookie'
+import { setAcessToken, setExpiresIn, setIsAuthed } from '../store/actions/authAction'
 
 const Home = () => {
+
+  const dispatch = useDispatch()
+  const cookies = new Cookies
   const { isAuthed } = useSelector(state => state.auth)
+
+  useEffect(() => {
+    if (cookies.get('IS_AUTHED') === 'true') {
+      dispatch(setAcessToken(cookies.get('ACESS_TOKEN')))
+      dispatch(setIsAuthed(true))
+    }
+  }, [])
+
   return (
     <div>
       <Authorization />
@@ -28,7 +40,7 @@ const Home = () => {
         </>
       }
     </div>
-  );
+  )
 }
 
 export default Home;
