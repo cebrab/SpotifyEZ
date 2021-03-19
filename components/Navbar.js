@@ -70,7 +70,7 @@ function SearchBar() {
                 //TODO: Hook this up to send query string parameters to Search page
                 router.push({
                   pathname: '/search',
-                  query: searchString
+                  query: 'q=' + searchString
                 })
                 setSearchString('');
                 e.preventDefault();

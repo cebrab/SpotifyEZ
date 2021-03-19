@@ -225,7 +225,7 @@ function PlaylistViewColumn(props) {
       {((props.addedSongs && props.addedSongs.length > 0) || removedSongUris.length > 0) &&
         <SaveSubPlaylistButton
           onClick={() => { savePlaylist() }}>
-          Save Sub-Playlist
+          Save Playlist
         </SaveSubPlaylistButton>
       }
       <div>
