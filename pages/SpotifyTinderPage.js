@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux'
 import { getSongRecommendations } from '../store/actions/songAction';
 import PlaylistColumn from '../components/PlaylistColumn'
+import PlaylistViewColumn from '../components/PlaylistViewColumn';
 
 //note track is an array with one object, and that object contains
 export default function TestHalfPagePlaylist() {
@@ -310,13 +311,24 @@ export default function TestHalfPagePlaylist() {
 
     <div css={SpotifyTinderPageContainerStyling}>
       <SpotifyTinder playlist={recommendations ? recommendations.tracks : dummyData.tracks} SwipeRight={swipeRight}/>
-      <PlaylistColumn playlist={[]}
-                          addedSongs={swipeRightList ? swipeRightList : dummyData.tracks}
-                          playlistTitle={"New playlist"}
-                          setPlaylist={addSwipeRightList}
-                          hasMinusButton={true}
-                          playlistId={router.query.playlistId}
-      />
+      <>
+      {router.query.playlistId ?
+        <PlaylistColumn
+          playlist={[]}
+          addedSongs={swipeRightList ? swipeRightList : dummyData.tracks}
+          setPlaylist={addSwipeRightList}
+          hasMinusButton={true}
+          playlistId={router.query.playlistId}
+        /> :
+        <PlaylistViewColumn
+          playlist={[]}
+          addedSongs={swipeRightList ? swipeRightList : dummyData.tracks}
+          playlistTitle={"New playlist"}
+          setPlaylist={addSwipeRightList}
+          hasMinusButton={true}
+        />
+      }
+      </>
     </div>
 
 

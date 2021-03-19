@@ -50,7 +50,7 @@ function PlaylistViewPage() {
         />
 
         {makingSubPlaylist && [
-            <PlaylistColumn
+            <PlaylistViewColumn
               playlistTitle="Sub-Playlist"
               playlist={[]}
               addedSongs={subPlaylist}

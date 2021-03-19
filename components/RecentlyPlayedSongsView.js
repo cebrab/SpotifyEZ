@@ -1,8 +1,11 @@
+/** @jsxImportSource @emotion/react */
+
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getRecents } from '../store/actions/songAction';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import PlaylistColumn from '../components/PlaylistColumn'
+import PlaylistViewColumn from '../components/PlaylistViewColumn';
 
 
 function RecentlyPlayedSongsView() {
@@ -26,18 +29,28 @@ function RecentlyPlayedSongsView() {
       })
     }
 
-    console.log("==recentSongs: ", recentSongs && recentSongs.items.map(item => item.track.uri));
 
+    if (recentSongs){
+      var obj = {
+        tracks: {
+            items: recentSongs.items.map(item => item.track)
+        }
+      }
+      console.log("recent songs ", recentSongs.items.map(item => item.track));
+      console.log("obj", obj);
+    }
     return(
-        <PlaylistColumn
-          playlist={recentSongs && recentSongs.items.map(item => item.track)}
-          //playlist={[]}
+      <>
+      {recentSongs &&
+        <PlaylistViewColumn
+          playlist={recentSongs.items.map(item => item.track)}
           playlistTitle="Recently Played"
           hasPlusButton={true}
           onPlusButtonClick={onPlusButtonClick}
           setPlaylist={setPlaylist}
         />
-
-    )
+      }
+    </>
+    );
 }
 export default RecentlyPlayedSongsView;

@@ -9,7 +9,9 @@ function usePlaylists() {
     const { playlists } = useSelector(state => state.playlist)
 
     useEffect(() => {
+        console.log("Access token: ", accessToken);
         dispatch(getPlaylistsList(accessToken))
+
     }, [])
     return { playlists }
 }
