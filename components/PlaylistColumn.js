@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import colors from '../styles/colors';
 import PropTypes from 'prop-types';
+import { getOptions } from '../store/utils'
+import axios from 'axios'
 
-import { getPlaylistById } from '../store/actions/playlistAction';
+import { getPlaylistById, clearPlaylistById } from '../store/actions/playlistAction';
 import PlaylistViewColumn from '../components/PlaylistViewColumn'
 
 
@@ -14,18 +16,19 @@ function PlaylistColumn(props) {
   const { playlistById } = useSelector(state => state.playlist)
   const { user } = useSelector(state => state.user)
 
+  const dummyPlaylistID = "08ERR8tNrl7WBI3om8YkyK"
   useEffect(() => {
     if (props.playlistId){
       console.log("==Getting playlist with ID: ", props.playlistId);
       dispatch(getPlaylistById(accessToken, props.playlistId))
     } else {
-      console.log("Rendering a client-side playlist", props.playlist, "\nID: ", props.playlistId);
+      console.log("Rendering a client-side playlist, props: ", props);
     }
-  }, [props.playlistId, props.playlist])
+  }, [props.playlistId])
 
   return(
     <>
-    {playlistById || props.playlist &&
+    {playlistById &&
       <PlaylistViewColumn
         {...props}
         playlistTitle={props.playlistId ?

@@ -20,10 +20,10 @@ const Home = () => {
       { isAuthed === true &&
         <>
           <Layout>
-
+            <TwoColumnLayout>
               <UserProfile />
               <RecentlyPlayedSongsView />
-
+            </TwoColumnLayout>
           </Layout>
         </>
       }

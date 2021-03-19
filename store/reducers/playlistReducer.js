@@ -20,6 +20,12 @@ const playlistReducer = (state = initialState, action) => {
         ...state,
         playlists: action.playlists
       }
+    case types.CLEAR_PLAYLIST_BY_ID:
+      return {
+        ...state,
+        playlistById: []
+      }
+
     default:
       return state
   }

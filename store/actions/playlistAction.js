@@ -31,3 +31,9 @@ export const getPlaylistsList = (accessToken) => async dispatch => {
     playlists: res.data.items
   })
 }
+
+export const clearPlaylistById = () => dispatch => {
+  dispatch({
+    type: types.CLEAR_PLAYLIST_BY_ID
+  })
+}
