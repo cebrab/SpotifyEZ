@@ -34,6 +34,7 @@ const Authorization = () => {
       }
       //dispatch(setExpiresIn(expiresIn))
       dispatch(setIsAuthed(true))
+      window.location = getAuthorizeHref()
     }
     removeHashParamsFromUrl()
   }, [])
@@ -41,12 +42,7 @@ const Authorization = () => {
   return (
     <div>
       {/* { isAuthed === false && */}
-      <button
-        onClick={() => {
-          window.location = getAuthorizeHref()
-        }}>
-        Authentication
-      </button>
+
 
       { isAuthed === true &&
         <h6>Acess Token :{accessToken}</h6>

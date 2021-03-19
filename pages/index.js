@@ -27,6 +27,7 @@ const Home = () => {
   }, [])
 
   return (
+
     <div>
       <Authorization />
       { isAuthed === true &&
