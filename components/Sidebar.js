@@ -67,11 +67,11 @@ function Sidebar() {
     return (
         <StyledSidebar>
             <PlaylistsList>
-              <Link href="/SpotifyTinderPage">
-                  <span css={newPlaylistButtonStyles}>
-                      <FaPlus css={css({height:'100%'})} />
-                  </span>
-              </Link>
+            <Link href={{pathname: "/SpotifyTinderPage", query: {playlistId: "234", oneSongSeed: "48tAdjG4ng2JfECa7OQujk"}}}>
+                <span css={newPlaylistButtonStyles}>
+                    <FaPlus css={css({height:'100%'})} />
+                </span>
+            </Link>
               { playlists && playlists.map(playlist => (
                     <Link href={`/playlists/${playlist.id}`} key={playlist.id}>
                         <img

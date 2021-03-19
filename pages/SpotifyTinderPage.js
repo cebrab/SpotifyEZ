@@ -10,12 +10,21 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux'
 import { getSongRecommendations } from '../store/actions/songAction';
+import PlaylistViewColumn from '../components/PlaylistViewColumn'
+
 //note track is an array with one object, and that object contains
 export default function TestHalfPagePlaylist() {
   const router = useRouter();
   const dispatch = useDispatch()
   const { accessToken } = useSelector(state => state.auth)
   const { recommendations } = useSelector(state => state.song)
+  const [swipeRightList, addSwipeRightList] = useState([])
+
+  function swipeRight(songObject){
+    addSwipeRightList([...swipeRightList, songObject])
+    console.log("Song object: " + songObject)
+  }
+
   console.log(router.query)
 
   useEffect(() => {
@@ -300,8 +309,13 @@ export default function TestHalfPagePlaylist() {
     `}</style>
 
     <div css={SpotifyTinderPageContainerStyling}>
-      <SpotifyTinder playlist={recommendations ? recommendations.tracks : dummyData.tracks}/>
-      <HalfPagePlaylist playlist={recommendations ? recommendations.tracks : dummyData.tracks}/>
+      <SpotifyTinder playlist={recommendations ? recommendations.tracks : dummyData.tracks} SwipeRight={swipeRight}/>
+      <PlaylistViewColumn playlist={[]}
+                          addedSongs={swipeRightList ? swipeRightList : dummyData.tracks}
+                          playlistTitle={"New playlist"}
+                          setPlaylist={addSwipeRightList}
+                          hasMinusButton={true}
+      />
     </div>
 
 

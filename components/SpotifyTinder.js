@@ -35,6 +35,8 @@ function SpotifyTinder(props){
   function swipeRightClicked(e){
     if (counter < props.playlist.length - 1){
       // add song uri into redux props.playlist[counter].uri
+      props.SwipeRight(props.playlist[counter])
+      console.log("Song object in component: " + props.playlist[counter])
       setCounter(counter+1);
     }
     else {
